@@ -1,5 +1,6 @@
 import express from 'express';
 import type { Application, Request, Response } from 'express';
+import globalErrorHandler from './middleware/error.middleware';
 
 const app: Application = express();
 
@@ -19,5 +20,8 @@ app.get('/', (req: Request, res: Response) => {
 // Product routes
 import productRoutes from './routes/product.route';
 app.use('/api/v1/products', productRoutes);
+
+// Global error handler middleware
+app.use(globalErrorHandler);
 
 export default app;
