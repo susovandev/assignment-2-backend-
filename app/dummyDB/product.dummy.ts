@@ -1,4 +1,4 @@
-interface IProductDocument {
+export interface IProductDocument {
 	_id: number;
 	name: string;
 	description: string;

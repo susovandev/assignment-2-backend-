@@ -16,4 +16,8 @@ app.get('/', (req: Request, res: Response) => {
 	res.send('Hello World!');
 });
 
+// Product routes
+import productRoutes from './routes/product.route';
+app.use('/api/v1/products', productRoutes);
+
 export default app;
