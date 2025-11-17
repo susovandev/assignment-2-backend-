@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import productController from '../controller/product.controller';
+import validateRequest from '../middleware/validation.middleware';
+import { createProductValidationSchema } from '../validation/product.validation';
 
 const router = Router();
 
-router.route('/create').post(productController.createProductHandler);
+router
+	.route('/create')
+	.post(validateRequest(createProductValidationSchema), productController.createProductHandler);
 
 export default router;
