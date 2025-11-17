@@ -1,7 +1,24 @@
 import { dummyProducts, IProductDocument } from '../dummyDB/product.dummy';
+import { NotFoundException } from '../utils/apiError';
 import Logger from '../utils/logger.utils';
 
 class ProductService {
+	async findById(productId: number) {
+		try {
+			Logger.info(`[ProductService] Find product request received with id: ${productId}`);
+
+			const product = dummyProducts.find((p) => p._id === productId);
+			console.log(product);
+			if (!product) {
+				throw new NotFoundException('product not found for given ID');
+			}
+
+			return product;
+		} catch (error) {
+			Logger.warn('[ProductService] Error finding product', error);
+			throw error;
+		}
+	}
 	async create(productData: Omit<IProductDocument, '_id' | 'createdAt' | 'updatedAt'>) {
 		try {
 			Logger.info(
@@ -15,6 +32,7 @@ class ProductService {
 				updatedAt: new Date(),
 			});
 
+			console.log(newProduct);
 			return newProduct;
 		} catch (error) {
 			Logger.warn('[ProductService] Error creating product', error);

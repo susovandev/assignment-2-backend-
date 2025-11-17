@@ -6,3 +6,7 @@ export const createProductValidationSchema = Joi.object().keys({
 	price: Joi.number().required().positive().precision(2),
 	category: Joi.string().required().min(3).max(50),
 });
+
+export const validateId = Joi.object().keys({
+	id: Joi.number().required(),
+});
