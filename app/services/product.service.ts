@@ -39,6 +39,32 @@ class ProductService {
 			throw error;
 		}
 	}
+	async update(
+		productId: number,
+		productData: Partial<Omit<IProductDocument, '_id' | 'createdAt' | 'updatedAt'>>,
+	) {
+		try {
+			Logger.info(
+				`[ProductController] update product request received with id: ${productId} and input: ${JSON.stringify(productData)}`,
+			);
+
+			const existingProductIndex = dummyProducts.findIndex((p) => p._id === productId);
+			if (existingProductIndex === -1) {
+				throw new NotFoundException('product not found for given ID');
+			}
+
+			dummyProducts[existingProductIndex] = {
+				...dummyProducts[existingProductIndex],
+				...productData,
+				updatedAt: new Date(),
+			};
+
+			return dummyProducts[existingProductIndex];
+		} catch (error) {
+			Logger.warn('[ProductService] Error updating product', error);
+			throw error;
+		}
+	}
 }
 
 export default new ProductService();

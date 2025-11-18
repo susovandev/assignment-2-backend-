@@ -13,4 +13,8 @@ router
 	.route('/create')
 	.post(validateRequest(createProductValidationSchema), productController.createProductHandler);
 
+router
+	.route('/update/:id')
+	.patch(validateRequest(validateId, 'params'), productController.updateProductHandler);
+
 export default router;
