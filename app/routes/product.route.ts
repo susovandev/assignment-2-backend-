@@ -17,4 +17,8 @@ router
 	.route('/update/:id')
 	.patch(validateRequest(validateId, 'params'), productController.updateProductHandler);
 
+router
+	.route('/:id')
+	.delete(validateRequest(validateId, 'params'), productController.deleteProductHandler);
+
 export default router;

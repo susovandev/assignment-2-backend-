@@ -32,8 +32,7 @@ class ProductService {
 				updatedAt: new Date(),
 			});
 
-			console.log(newProduct);
-			return newProduct;
+			return dummyProducts[newProduct - 1];
 		} catch (error) {
 			Logger.warn('[ProductService] Error creating product', error);
 			throw error;
@@ -62,6 +61,23 @@ class ProductService {
 			return dummyProducts[existingProductIndex];
 		} catch (error) {
 			Logger.warn('[ProductService] Error updating product', error);
+			throw error;
+		}
+	}
+	async delete(productId: number) {
+		try {
+			Logger.info(`[ProductService] Delete product request received with id: ${productId}`);
+
+			const existingProductIndex = dummyProducts.findIndex((p) => p._id === productId);
+			if (!existingProductIndex) {
+				throw new NotFoundException('product not found for given ID');
+			}
+
+			dummyProducts.splice(existingProductIndex, 1);
+
+			return true;
+		} catch (error) {
+			Logger.warn('[ProductService] Error deleting product', error);
 			throw error;
 		}
 	}

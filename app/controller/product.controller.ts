@@ -26,12 +26,12 @@ class ProductController {
 			Logger.info(`[ProductController] Create product request received`);
 
 			// Delegate core logic to service layer
-			await productService.create(req.body);
-
+			const newProduct = await productService.create(req.body);
+			console.log(newProduct);
 			// Send structured API response
 			return res
 				.status(StatusCodes.CREATED)
-				.json(new ApiResponse(StatusCodes.CREATED, 'Product created successfully'));
+				.json(new ApiResponse(StatusCodes.CREATED, 'Product created successfully', newProduct));
 		} catch (error) {
 			Logger.warn('[ProductController] Error creating product', error);
 			next(error);
@@ -50,6 +50,22 @@ class ProductController {
 				.json(new ApiResponse(StatusCodes.OK, 'Product updated successfully', updatedProduct));
 		} catch (error) {
 			Logger.warn('[ProductController] Error update a product', error);
+			next(error);
+		}
+	}
+	public async deleteProductHandler(req: Request, res: Response, next: NextFunction) {
+		try {
+			Logger.info(`[ProductController] delete product request received with id: ${req.params.id}`);
+
+			// Delegate core logic to service layer
+			await productService.delete(Number(req.params.id));
+
+			// Send structured API response
+			return res
+				.status(StatusCodes.OK)
+				.json(new ApiResponse(StatusCodes.OK, 'Product deleted successfully'));
+		} catch (error) {
+			Logger.warn('[ProductController] Error delete a product', error);
 			next(error);
 		}
 	}
