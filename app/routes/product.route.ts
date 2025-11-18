@@ -5,6 +5,7 @@ import { createProductValidationSchema, validateId } from '../validation/product
 
 const router = Router();
 
+router.route('/').get(productController.fetchProductsHandler);
 router
 	.route('/:id')
 	.get(validateRequest(validateId, 'params'), productController.fetchProductHandler);

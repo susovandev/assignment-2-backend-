@@ -3,6 +3,18 @@ import { NotFoundException } from '../utils/apiError';
 import Logger from '../utils/logger.utils';
 
 class ProductService {
+	async findAll() {
+		try {
+			Logger.info(`[ProductService] Fetch products request received`);
+			if (dummyProducts.length === 0) {
+				throw new NotFoundException('product not found');
+			}
+			return dummyProducts;
+		} catch (error) {
+			Logger.warn('[ProductService] Error fetching products', error);
+			throw error;
+		}
+	}
 	async findById(productId: number) {
 		try {
 			Logger.info(`[ProductService] Find product request received with id: ${productId}`);

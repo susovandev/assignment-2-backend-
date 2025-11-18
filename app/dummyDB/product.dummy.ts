@@ -9,15 +9,4 @@ export interface IProductDocument {
 	updatedAt: Date;
 }
 
-export const dummyProducts: IProductDocument[] = [
-	{
-		_id: 1,
-		name: 'Product 1',
-		description: 'Description 1',
-		price: 10,
-		category: 'Category 1',
-		inStock: true,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	},
-];
+export const dummyProducts: IProductDocument[] = [];
